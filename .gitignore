@@ -1,0 +1,155 @@
+# =========================
+# .NET build results
+# =========================
+
+[Bb]in/
+[Oo]bj/
+out/
+build/
+[Bb]uild/
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+
+# =========================
+# Rider / JetBrains
+# =========================
+
+.idea/
+*.sln.iml
+
+# Если команда хранит настройки Rider в репозитории,
+# тогда вместо .idea/ можно игнорировать только:
+# .idea/**/workspace.xml
+# .idea/**/tasks.xml
+# .idea/**/usage.statistics.xml
+# .idea/**/dictionaries
+# .idea/**/shelf
+
+# =========================
+# Visual Studio
+# =========================
+
+.vs/
+*.user
+*.userosscache
+*.suo
+*.rsuser
+*.sln.docstates
+
+# =========================
+# NuGet
+# =========================
+
+*.nupkg
+*.snupkg
+packages/
+!packages/build/
+project.lock.json
+project.assets.json
+
+# =========================
+# Test results / coverage
+# =========================
+
+TestResults/
+test-results/
+coverage/
+coverage-results/
+*.trx
+*.coverage
+*.coveragexml
+*.cobertura.xml
+*.opencover.xml
+*.lcov
+lcov.info
+
+# =========================
+# Reqnroll / SpecFlow generated files
+# =========================
+
+*.feature.cs
+*.feature.xlsx.*
+
+# =========================
+# Logs
+# =========================
+
+*.log
+logs/
+Logs/
+
+# =========================
+# Local config / secrets
+# =========================
+
+.env
+.env.*
+*.local
+*.secrets.json
+secrets.json
+
+appsettings.Development.json
+appsettings.Local.json
+appsettings.local.json
+
+*.runsettings.user
+*.testsettings.user
+
+# =========================
+# OS files
+# =========================
+
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# =========================
+# Temporary files
+# =========================
+
+*.tmp
+*.temp
+*.swp
+*.bak
+*.orig
+*.rej
+
+# =========================
+# PowerShell / scripts temp
+# =========================
+
+*.ps1xml
+*.pssc
+*.psrc
+
+# =========================
+# Docker / local compose overrides
+# =========================
+
+docker-compose.override.yml
+docker-compose.*.local.yml
+
+# =========================
+# Node / frontend, if exists
+# =========================
+
+node_modules/
+dist/
+.cache/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# =========================
+# Publish artifacts
+# =========================
+
+publish/
+artifacts/
+artifacts-test/
