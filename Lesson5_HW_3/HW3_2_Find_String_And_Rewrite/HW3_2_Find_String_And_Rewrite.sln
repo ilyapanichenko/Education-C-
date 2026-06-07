@@ -1,0 +1,16 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HW3_2_Find_String_And_Rewrite", "HW3_2_Find_String_And_Rewrite\HW3_2_Find_String_And_Rewrite.csproj", "{E30EF51C-22AC-4A4C-8B2E-743CE808F4FF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E30EF51C-22AC-4A4C-8B2E-743CE808F4FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E30EF51C-22AC-4A4C-8B2E-743CE808F4FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E30EF51C-22AC-4A4C-8B2E-743CE808F4FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E30EF51C-22AC-4A4C-8B2E-743CE808F4FF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
