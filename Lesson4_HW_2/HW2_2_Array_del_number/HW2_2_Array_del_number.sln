@@ -1,0 +1,16 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HW2_2_Array_del_number", "HW2_2_Array_del_number\HW2_2_Array_del_number.csproj", "{2701F790-948F-4CDA-8B1D-429FC48EFCBA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2701F790-948F-4CDA-8B1D-429FC48EFCBA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2701F790-948F-4CDA-8B1D-429FC48EFCBA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2701F790-948F-4CDA-8B1D-429FC48EFCBA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2701F790-948F-4CDA-8B1D-429FC48EFCBA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
