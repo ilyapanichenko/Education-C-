@@ -23,24 +23,14 @@ public static class Calculator
             throw new DivideByZeroException("Деление на ноль запрещено");
         }
 
-        double result;
-        switch (operation)
+        double result = operation switch
         {
-            case "+":
-                result = left + right;
-                break;
-            case "-":
-                result = left - right;
-                break;
-            case "*":
-                result = left * right;
-                break;
-            case "/":
-                result = left / right;
-                break;
-            default:
-                throw new NotSupportedException("Неизвестная операция");
-        }
+            "+" => left + right,
+            "-" => left - right,
+            "*" => left * right,
+            "/" => left / right,
+            _=> throw new NotSupportedException("Неизвестная операция") 
+        };
 
         if (double.IsInfinity(result))
         {
