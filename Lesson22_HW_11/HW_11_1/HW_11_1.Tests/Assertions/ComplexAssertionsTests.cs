@@ -1,39 +1,12 @@
 ﻿using HW_11_1.Tests.Hooks;
+using HW_11_1.Tests.TestData;
 
 namespace HW_11_1.Tests.Assertions;
 
 [Parallelizable(ParallelScope.Children)]
 public class ComplexAssertionsTests : BaseTest
 {
-    public static IEnumerable<TestCaseData> TestCasesAdd()
-    {
-        yield return new TestCaseData(1, 2, 3);
-        yield return new TestCaseData(5, 5, 10);
-        yield return new TestCaseData(10, 2, 12);
-    }
-
-    public static IEnumerable<TestCaseData> TestCasesSubtract()
-    {
-        yield return new TestCaseData(1, 2, -1);
-        yield return new TestCaseData(-2, -3, 1);
-        yield return new TestCaseData(-5, -6, 1);
-    }
-
-    public static IEnumerable<TestCaseData> TestCasesMultiply()
-    {
-        yield return new TestCaseData(1, 2, 2);
-        yield return new TestCaseData(-2, -3, 6);
-        yield return new TestCaseData(-5, -6, 30);
-    }
-
-    public static IEnumerable<TestCaseData> TestCasesDivide()
-    {
-        yield return new TestCaseData(10.0, 2.0, 5.0);
-        yield return new TestCaseData(9.0, 3.0, 3.0);
-        yield return new TestCaseData(5.0, 2.0, 2.5);
-    }
-    
-    [TestCaseSource(nameof(TestCasesAdd))]
+    [TestCaseSource(typeof(CalculatorTestCases), nameof(CalculatorTestCases.AddCases))]
     public void AddTest(int a, int b, int expected)
     {
         var result = Calculator.Add(a, b);
@@ -46,7 +19,7 @@ public class ComplexAssertionsTests : BaseTest
         }
     }
 
-    [TestCaseSource(nameof(TestCasesSubtract))]
+    [TestCaseSource(typeof(CalculatorTestCases), nameof(CalculatorTestCases.SubtractCases))]
     public void SubtractTest(int a, int b, int expected)
     {
         var result = Calculator.Subtract(a, b);
@@ -54,7 +27,7 @@ public class ComplexAssertionsTests : BaseTest
         Assert.That(result, Is.EqualTo(expected));
     }
 
-    [TestCaseSource(nameof(TestCasesMultiply))]
+    [TestCaseSource(typeof(CalculatorTestCases), nameof(CalculatorTestCases.MultiplyCases))]
     public void MultiplyTest(int a, int b, int expected)
     {
         var result = Calculator.Multiply(a, b);
@@ -66,7 +39,7 @@ public class ComplexAssertionsTests : BaseTest
         }
     }
 
-    [TestCaseSource(nameof(TestCasesDivide))]
+    [TestCaseSource(typeof(CalculatorTestCases), nameof(CalculatorTestCases.DivideCases))]
     public void DivideTest(double a, double b, double expected)
     {
         var result = Calculator.Divide(a, b);
