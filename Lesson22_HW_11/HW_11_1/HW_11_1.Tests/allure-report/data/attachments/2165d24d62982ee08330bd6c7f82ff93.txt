@@ -1,0 +1,2 @@
+18:52:42.996 | INFO  | ComplexAssertionsTests | [START] CalculationSummaryTest
+18:52:42.999 | INFO  | ComplexAssertionsTests | [PASS] CalculationSummaryTest

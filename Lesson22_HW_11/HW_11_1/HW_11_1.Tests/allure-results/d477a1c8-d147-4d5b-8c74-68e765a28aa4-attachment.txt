@@ -1,0 +1,2 @@
+19:18:49.890 | INFO  | SimpleAssertionTests | [START] MultiplyTest(5,-2,-10)
+19:18:49.890 | INFO  | SimpleAssertionTests | [PASS] MultiplyTest(5,-2,-10)

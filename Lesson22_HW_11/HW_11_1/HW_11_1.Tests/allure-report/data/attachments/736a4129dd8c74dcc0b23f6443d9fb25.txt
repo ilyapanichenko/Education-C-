@@ -1,0 +1,2 @@
+18:52:42.990 | INFO  | ComplexAssertionsTests | [START] BasicResultsTest
+18:52:43.002 | INFO  | ComplexAssertionsTests | [PASS] BasicResultsTest

@@ -1,0 +1,2 @@
+19:18:49.901 | INFO  | SimpleAssertionTests | [START] SubtractTest(1,2,-1)
+19:18:49.902 | INFO  | SimpleAssertionTests | [PASS] SubtractTest(1,2,-1)

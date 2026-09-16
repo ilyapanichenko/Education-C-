@@ -8,4 +8,8 @@
         <IsPackable>false</IsPackable>
     </PropertyGroup>
 
+    <ItemGroup>
+      <PackageReference Include="log4net" Version="3.4.1-preview.1" />
+    </ItemGroup>
+
 </Project>

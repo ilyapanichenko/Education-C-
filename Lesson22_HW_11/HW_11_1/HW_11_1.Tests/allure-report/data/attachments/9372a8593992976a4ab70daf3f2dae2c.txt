@@ -1,0 +1,2 @@
+18:52:43.002 | INFO  | ComplexAssertionsTests | [START] DivideByZeroTest
+18:52:43.010 | INFO  | ComplexAssertionsTests | [PASS] DivideByZeroTest

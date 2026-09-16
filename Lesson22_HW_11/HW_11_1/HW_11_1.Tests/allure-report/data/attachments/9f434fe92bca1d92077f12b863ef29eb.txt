@@ -1,0 +1,2 @@
+18:52:43.022 | INFO  | ComplexAssertionsTests | [START] MultiplyTest(-5,-6,30)
+18:52:43.022 | INFO  | ComplexAssertionsTests | [PASS] MultiplyTest(-5,-6,30)
