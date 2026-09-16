@@ -1,4 +1,5 @@
 ﻿using HW9_1.Core.Components;
+using HW9_1.Core.Elements;
 using OpenQA.Selenium;
 
 namespace HW9_1.Core.Pages;
@@ -9,19 +10,19 @@ public class ProductsPage(IWebDriver driver) : BasePage(driver)
 
     #region Locators
 
-    private readonly By _titleLocator = By.ClassName("title");
-    private readonly By _addBackpackLocator = By.Id("add-to-cart-sauce-labs-backpack");
-    private readonly By _removeBackpackLocator = By.Id("remove-sauce-labs-backpack");
+    private readonly Label _title =new Label(driver, By.ClassName("title"));
+    private readonly Button _addBackpack = new Button(driver,By.Id("add-to-cart-sauce-labs-backpack"));
+    private readonly Button _removeBackpack = new Button(driver, By.Id("remove-sauce-labs-backpack"));
 
     #endregion
 
-    #region Methods
+    #region Elements
 
-    public string GetTitle() => GetText(_titleLocator);
+    public string GetTitle() => _title.GetText();
 
-    public void AddBackpackToCart() => Click(_addBackpackLocator);
+    public void AddBackpackToCart() => _addBackpack.Click();
 
-    public void RemoveBackpackFromCart() => Click(_removeBackpackLocator);
+    public void RemoveBackpackFromCart() => _removeBackpack.Click();
 
     #endregion
 }
