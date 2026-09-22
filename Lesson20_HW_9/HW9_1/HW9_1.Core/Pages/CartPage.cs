@@ -1,4 +1,5 @@
 ﻿using HW9_1.Core.Components;
+using HW9_1.Core.Elements;
 using OpenQA.Selenium;
 
 namespace HW9_1.Core.Pages;
@@ -7,28 +8,28 @@ public class CartPage(IWebDriver driver) : BasePage(driver)
 {
     public HeaderSection Header = new HeaderSection(driver);
 
-    #region Locators
+    #region Elements
 
-    private readonly By _titleLocator = By.CssSelector("[data-test='title']");
-    private readonly By _itemNameLocator = By.CssSelector("[data-test='inventory-item-name']");
-    private readonly By _removeBackpackLocator = By.Id("remove-sauce-labs-backpack");
-    private readonly By _checkoutButtonLocator = By.Id("checkout");
+    private readonly Label _title = new Label(driver, By.CssSelector("[data-test='title']"));
+    private readonly Label _itemName = new Label(driver,By.CssSelector("[data-test='inventory-item-name']"));
+    private readonly Button _removeBackpack = new Button(driver, By.Id("remove-sauce-labs-backpack"));
+    private readonly Button _checkoutButton = new Button(driver, By.Id("checkout"));
 
     #endregion
 
     #region Methods
 
-    public string GetTitle() => GetText(_titleLocator);
+    public string GetTitle() => _title.GetText();
 
-    public string GetItemName() => GetText(_itemNameLocator);
+    public string GetItemName() => _itemName.GetText();
 
-    public bool IsCheckoutButtonPresent() => IsElementPresent(_checkoutButtonLocator);
+    public bool IsCheckoutButtonPresent() => _checkoutButton.IsElementPresent();
 
-    public void RemoveBackpackFromCart() => Click(_removeBackpackLocator);
+    public void RemoveBackpackFromCart() => _removeBackpack.Click();
 
     public CheckoutInformationPage OpenCheckout()
     {
-        Click(_checkoutButtonLocator);
+        _checkoutButton.Click();
         return new CheckoutInformationPage(Driver);
     }
 

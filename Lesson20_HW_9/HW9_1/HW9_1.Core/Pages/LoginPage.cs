@@ -1,15 +1,17 @@
-﻿using OpenQA.Selenium;
+﻿using HW9_1.Core.Elements;
+using OpenQA.Selenium;
+using OpenQA.Selenium.Chrome;
 
 namespace HW9_1.Core.Pages;
 
 public class LoginPage(IWebDriver driver) : BasePage(driver)
 {
-    #region Locators
+    #region Elements
 
-    private readonly By _userNameLocator = By.Id("user-name");
-    private readonly By _passwordLocator = By.Id("password");
-    private readonly By _loginButtonLocator = By.Id("login-button");
-    private readonly By _errorMessageLocator = By.CssSelector("[data-test='error']");
+    private readonly TextBox _userName = new TextBox(driver,By.Id("user-name"));
+    private readonly TextBox _password = new TextBox(driver,By.Id("password"));
+    private readonly Button _loginButton = new Button(driver,By.Id("login-button"));
+    private readonly Label _errorMessage = new Label(driver, By.CssSelector("[data-test='error']"));
 
     #endregion
 
@@ -22,20 +24,20 @@ public class LoginPage(IWebDriver driver) : BasePage(driver)
 
     public LoginPage EnterUsername(string username)
     {
-        Type(_userNameLocator, username);
+        _userName.SetText(username);
         return this;
     }
 
     public LoginPage EnterPassword(string password)
     {
-        Type(_passwordLocator, password);
+        _password.SetText(password);
         return this;
     }
 
     public ProductsPage Login(string username = "standard_user", string password = "secret_sauce")
     {
         EnterUsername(username).EnterPassword(password);
-        Click(_loginButtonLocator);
+        _loginButton.Click();
         WaitUntilUrlContains("inventory");
 
         return new ProductsPage(Driver);
@@ -44,12 +46,11 @@ public class LoginPage(IWebDriver driver) : BasePage(driver)
     public LoginPage LoginExpectingError(string username, string password)
     {
         EnterUsername(username).EnterPassword(password);
-        Click(_loginButtonLocator);
-
+        _loginButton.Click();
         return this;
     }
 
-    public string GetErrorMessage() => GetText(_errorMessageLocator);
+    public string GetErrorMessage() => _errorMessage.GetText();
 
     #endregion
 }

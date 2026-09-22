@@ -1,4 +1,5 @@
-﻿using HW9_1.Core.Pages;
+﻿using HW9_1.Core.Elements;
+using HW9_1.Core.Pages;
 using OpenQA.Selenium;
 
 namespace HW9_1.Core.Components;
@@ -7,25 +8,25 @@ public class HeaderSection(IWebDriver driver) : BasePage(driver)
 {
     #region Locators
 
-    private readonly By _cartBadgeLocator = By.CssSelector("[data-test='shopping-cart-badge']");
-    private readonly By _cartLinkLocator = By.ClassName("shopping_cart_link");
+    private readonly Label _cartBadge = new Label(driver, By.CssSelector("[data-test='shopping-cart-badge']"));
+    private readonly Link _cartLink = new Link(driver, By.ClassName("shopping_cart_link"));
 
     #endregion
 
     #region Methods
 
-    public string GetCartCount() => GetText(_cartBadgeLocator);
+    public string GetCartCount() => _cartBadge.GetText();
 
-    public bool IsCartBadgePresent() => IsElementPresent(_cartBadgeLocator);
+    public bool IsCartBadgePresent() => _cartBadge.IsElementPresent();
 
     public void WaitUntilCartBadgeAbsent()
     {
-        WaitUntilElementAbsent(_cartBadgeLocator);
+        _cartBadge.WaitUntilElementAbsent();
     }
 
     public CartPage OpenCart()
     {
-        Click(_cartLinkLocator);
+        _cartLink.Click();
         return new CartPage(Driver);
     }
 
