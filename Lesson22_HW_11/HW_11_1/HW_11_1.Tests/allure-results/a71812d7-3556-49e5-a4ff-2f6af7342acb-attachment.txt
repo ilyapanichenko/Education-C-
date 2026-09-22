@@ -1,0 +1,2 @@
+19:18:49.870 | INFO  | SimpleAssertionTests | [START] AddTest(5,-2,3)
+19:18:49.870 | INFO  | SimpleAssertionTests | [PASS] AddTest(5,-2,3)

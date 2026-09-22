@@ -1,0 +1,2 @@
+19:18:49.875 | INFO  | SimpleAssertionTests | [START] DivideTest(-1,4,-0.25d)
+19:18:49.876 | INFO  | SimpleAssertionTests | [PASS] DivideTest(-1,4,-0.25d)

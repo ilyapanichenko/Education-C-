@@ -1,0 +1,2 @@
+18:52:43.034 | INFO  | SimpleAssertionTests | [START] AddTest(1,2,3)
+18:52:43.035 | INFO  | SimpleAssertionTests | [PASS] AddTest(1,2,3)

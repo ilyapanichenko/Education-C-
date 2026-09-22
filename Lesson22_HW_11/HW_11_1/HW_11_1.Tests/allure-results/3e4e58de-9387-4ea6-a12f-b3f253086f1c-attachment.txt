@@ -1,0 +1,2 @@
+19:18:49.882 | INFO  | SimpleAssertionTests | [START] MultiplyTest(1,2,2)
+19:18:49.884 | INFO  | SimpleAssertionTests | [PASS] MultiplyTest(1,2,2)

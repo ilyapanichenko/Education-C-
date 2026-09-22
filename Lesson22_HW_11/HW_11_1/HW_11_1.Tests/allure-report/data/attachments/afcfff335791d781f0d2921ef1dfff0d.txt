@@ -1,0 +1,2 @@
+18:52:43.046 | INFO  | SimpleAssertionTests | [START] MultiplyTest(-1,4,-4)
+18:52:43.046 | INFO  | SimpleAssertionTests | [PASS] MultiplyTest(-1,4,-4)

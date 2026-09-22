@@ -1,0 +1,2 @@
+19:18:49.807 | INFO  | ComplexAssertionsTests | [START] DivideTest(9.0d,3.0d,3.0d)
+19:18:49.808 | INFO  | ComplexAssertionsTests | [PASS] DivideTest(9.0d,3.0d,3.0d)

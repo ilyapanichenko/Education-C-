@@ -1,0 +1,2 @@
+19:18:49.728 | INFO  | ComplexAssertionsTests | [START] AddTest(1,2,3)
+19:18:49.742 | INFO  | ComplexAssertionsTests | [PASS] AddTest(1,2,3)
