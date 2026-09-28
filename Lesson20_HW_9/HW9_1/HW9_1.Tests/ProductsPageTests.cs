@@ -8,10 +8,14 @@ public class ProductsPageTests : BaseTest
     [SetUp]
     public void Login()
     {
-        var loginPage = new LoginPage(Driver);
-        loginPage.Open();
+        var loginPage = new LoginPage(Driver, Settings);
+        loginPage.Load();
 
-        _productsPage = loginPage.Login();
+        _productsPage = new LoginPage(Driver, Settings)
+            .Load()
+            .EnterUsername()
+            .EnterPassword()
+            .Login();
     }
 
     [Test]

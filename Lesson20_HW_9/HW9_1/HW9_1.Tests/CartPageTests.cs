@@ -8,10 +8,14 @@ public class CartPageTests : BaseTest
     [SetUp]
     public void OpenCart()
     {
-        var loginPage = new LoginPage(Driver);
-        loginPage.Open();
+        var loginPage = new LoginPage(Driver, Settings);
+        loginPage.Load();
 
-        var productsPage = loginPage.Login();
+        var productsPage = new LoginPage(Driver, Settings)
+            .Load()
+            .EnterUsername()
+            .EnterPassword()
+            .Login();
 
         productsPage.AddBackpackToCart();
 

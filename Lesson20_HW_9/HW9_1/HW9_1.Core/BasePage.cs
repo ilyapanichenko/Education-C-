@@ -1,17 +1,21 @@
-﻿using OpenQA.Selenium;
+﻿using HW9_1.Core.Configuration;
+using HW9_1.Core.Factories;
+using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 
 namespace HW9_1.Core;
 
-public class BasePage
+public abstract class BasePage
 {
+    protected TestSettings Settings = null!;
     protected readonly IWebDriver Driver;
+    protected readonly ElementFactory ElementFactory;
 
-    private static readonly TimeSpan DefaultTimeout = TimeSpan.FromSeconds(10);
-
-    protected BasePage(IWebDriver driver)
+    protected BasePage(IWebDriver driver, TestSettings settings)
     {
         Driver = driver;
+        Settings = settings;
+        ElementFactory = new ElementFactory(driver);
     }
 
     #region Methods
@@ -23,8 +27,11 @@ public class BasePage
 
     private WebDriverWait CreateWait()
     {
-        return new WebDriverWait(Driver, DefaultTimeout);
+        return new WebDriverWait(Driver, TimeSpan.FromSeconds(Settings.TimeoutSeconds));
     }
 
+    public abstract bool IsLoaded();
+    public abstract BasePage Load();
+    
     #endregion
 }

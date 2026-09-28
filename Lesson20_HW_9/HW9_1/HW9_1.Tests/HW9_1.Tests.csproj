@@ -26,4 +26,10 @@
       <ProjectReference Include="..\HW9_1.Core\HW9_1.Core.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <None Update="Config\testsettings.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+    </ItemGroup>
+
 </Project>

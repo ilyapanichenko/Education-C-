@@ -1,51 +1,58 @@
-﻿using HW9_1.Core.Elements;
+﻿using HW9_1.Core.Configuration;
+using HW9_1.Core.Elements;
 using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
 
 namespace HW9_1.Core.Pages;
 
-public class LoginPage(IWebDriver driver) : BasePage(driver)
+public class LoginPage : BasePage
 {
+    private readonly TextBox _userName;
+    private readonly TextBox _password;
+    private readonly Button _loginButton;
+    private readonly Label _errorMessage;
     #region Elements
 
-    private readonly TextBox _userName = new TextBox(driver,By.Id("user-name"));
-    private readonly TextBox _password = new TextBox(driver,By.Id("password"));
-    private readonly Button _loginButton = new Button(driver,By.Id("login-button"));
-    private readonly Label _errorMessage = new Label(driver, By.CssSelector("[data-test='error']"));
-
+    public LoginPage(IWebDriver driver, TestSettings settings) : base(driver,settings)
+    {
+        _userName = ElementFactory.Create<TextBox>(By.Id("user-name"));
+        _password = ElementFactory.Create<TextBox>(By.Id("password"));
+        _loginButton = ElementFactory.Create<Button>(By.Id("login-button"));
+        _errorMessage = ElementFactory.Create<Label>(By.CssSelector("[data-test='error']"));
+    }
     #endregion
 
     #region Methods
-
-    public void Open()
+    public override bool IsLoaded()
     {
-        Driver.Navigate().GoToUrl("https://www.saucedemo.com/");
+        return _loginButton.IsElementPresent();
+    }
+    public override LoginPage Load()
+    {
+        Driver.Navigate().GoToUrl(Settings.BaseUrl);
+        return this;
     }
 
-    public LoginPage EnterUsername(string username)
+    public LoginPage EnterUsername(string username = "standard_user")
     {
         _userName.SetText(username);
         return this;
     }
 
-    public LoginPage EnterPassword(string password)
+    public LoginPage EnterPassword(string password = "secret_sauce")
     {
         _password.SetText(password);
         return this;
     }
 
-    public ProductsPage Login(string username = "standard_user", string password = "secret_sauce")
+    public ProductsPage Login()
     {
-        EnterUsername(username).EnterPassword(password);
         _loginButton.Click();
         WaitUntilUrlContains("inventory");
-
-        return new ProductsPage(Driver);
+        return new ProductsPage(Driver, Settings);
     }
 
-    public LoginPage LoginExpectingError(string username, string password)
+    public LoginPage LoginExpectingError()
     {
-        EnterUsername(username).EnterPassword(password);
         _loginButton.Click();
         return this;
     }
@@ -53,4 +60,5 @@ public class LoginPage(IWebDriver driver) : BasePage(driver)
     public string GetErrorMessage() => _errorMessage.GetText();
 
     #endregion
+
 }
