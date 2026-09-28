@@ -25,9 +25,15 @@ public class HeaderSection
         _cartLink = _elementFactory.Create<Link>(By.ClassName("shopping_cart_link"));
     }
 
-    public string GetCartCount() => _cartBadge.GetText();
+    public string GetCartCount()
+    {
+        return _cartBadge.GetText();
+    }
 
-    public bool IsCartBadgePresent() => _cartBadge.IsElementPresent();
+    public bool IsCartBadgePresent()
+    {
+        return _cartBadge.IsElementPresent();
+    }
 
     public void WaitUntilCartBadgeAbsent()
     {

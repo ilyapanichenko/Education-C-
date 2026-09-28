@@ -48,7 +48,8 @@ public class PurchaseTest : BaseTest
         var checkoutCompletePage = checkoutOverviewPage.CompleteOrder();
         Assert.That(checkoutCompletePage.GetTitle(), Is.EqualTo("Checkout: Complete!"));
         Assert.That(checkoutCompletePage.GetCompleteHeader(), Is.EqualTo("Thank you for your order!"));
-        Assert.That(checkoutCompletePage.GetCompleteText(), Is.EqualTo("Your order has been dispatched, and will arrive just as fast as the pony can get there!"));
+        Assert.That(checkoutCompletePage.GetCompleteText(),
+            Is.EqualTo("Your order has been dispatched, and will arrive just as fast as the pony can get there!"));
         Assert.That(checkoutCompletePage.IsBackHomeButtonPresent(), Is.True);
 
         productsPage = checkoutCompletePage.BackHome();

@@ -8,6 +8,7 @@ public class BaseTest
 {
     protected IWebDriver Driver = null!;
     protected TestSettings Settings = null!;
+
     [SetUp]
     public void SetUp()
     {

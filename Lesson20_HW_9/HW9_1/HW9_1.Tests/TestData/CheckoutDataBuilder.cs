@@ -14,15 +14,16 @@ public class CheckoutDataBuilder
 
     public CheckoutDataBuilder WithLastName(string lastName)
     {
-        _lastName =  lastName;
+        _lastName = lastName;
         return this;
     }
 
     public CheckoutDataBuilder WithPostalCode(string postalCode)
     {
-        _postalCode =  postalCode;
+        _postalCode = postalCode;
         return this;
     }
+
     public CheckoutData Build()
     {
         return new CheckoutData

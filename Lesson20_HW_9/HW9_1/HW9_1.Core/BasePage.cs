@@ -7,7 +7,7 @@ namespace HW9_1.Core;
 
 public abstract class BasePage
 {
-    protected TestSettings Settings = null!;
+    protected readonly TestSettings Settings;
     protected readonly IWebDriver Driver;
     protected readonly ElementFactory ElementFactory;
 
@@ -19,7 +19,12 @@ public abstract class BasePage
     }
 
     #region Methods
-    
+
+    protected void WaitUntilLoaded()
+    {
+        CreateWait().Until(_ => IsLoaded());
+    }
+
     protected void WaitUntilUrlContains(string text)
     {
         CreateWait().Until(driver => driver.Url.Contains(text));
@@ -32,6 +37,6 @@ public abstract class BasePage
 
     public abstract bool IsLoaded();
     public abstract BasePage Load();
-    
+
     #endregion
 }

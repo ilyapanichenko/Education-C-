@@ -11,9 +11,10 @@ public class CheckoutInformationPage : BasePage
     private readonly TextBox _lastNameField;
     private readonly TextBox _postalCodeField;
     private readonly Button _continueButton;
+
     #region Elements
 
-    public CheckoutInformationPage(IWebDriver driver, TestSettings settings) : base(driver,settings)
+    public CheckoutInformationPage(IWebDriver driver, TestSettings settings) : base(driver, settings)
     {
         _title = ElementFactory.Create<Label>(By.CssSelector("[data-test='title']"));
         _firstNameField = ElementFactory.Create<TextBox>(By.Id("first-name"));
@@ -43,13 +44,18 @@ public class CheckoutInformationPage : BasePage
         _postalCodeField.SetText(postalCode);
         return this;
     }
+
     public CheckoutOverviewPage ClickContinue()
-{
-    _continueButton.Click();
-    WaitUntilUrlContains("checkout-step-two");
-    return new CheckoutOverviewPage(Driver, Settings);
-}
-    public string GetTitle() => _title.GetText();
+    {
+        _continueButton.Click();
+        WaitUntilUrlContains("checkout-step-two");
+        return new CheckoutOverviewPage(Driver, Settings);
+    }
+
+    public string GetTitle()
+    {
+        return _title.GetText();
+    }
 
     #endregion
 
