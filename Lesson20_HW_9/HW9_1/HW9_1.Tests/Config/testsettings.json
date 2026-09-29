@@ -2,5 +2,7 @@
   "Browser": "Chrome",
   "TimeoutSeconds": 10,
   "BaseUrl": "https://www.saucedemo.com/",
-  "Headless": true
+  "Headless": true,
+  "ExecutionMode": "Local",
+  "GridUrl": "http://localhost:4444"
 }

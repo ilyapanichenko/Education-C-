@@ -6,4 +6,6 @@ public class TestSettings
     public int TimeoutSeconds { get; set; }
     public string BaseUrl { get; set; } = string.Empty;
     public bool Headless { get; set; }
+    public string ExecutionMode { get; set; } = string.Empty;
+    public string GridUrl { get; set; } = string.Empty;
 }

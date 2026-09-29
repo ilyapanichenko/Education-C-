@@ -11,7 +11,22 @@ public class ConfigurationProvider
         if (!File.Exists(ConfigPath)) throw new FileNotFoundException($"Config file not found: {ConfigPath}");
 
         var json = File.ReadAllText(ConfigPath);
-        var settings = JsonSerializer.Deserialize<TestSettings>(json);
-        return settings ?? throw new InvalidOperationException("Failed to deserialize test settings.");
+        var settings = JsonSerializer.Deserialize<TestSettings>(json) ?? throw new InvalidOperationException("Failed to deserialize test settings.");
+        var executionMode = Environment.GetEnvironmentVariable("EXECUTION_MODE");
+        if (!string.IsNullOrWhiteSpace(executionMode))
+        {
+            settings.ExecutionMode = executionMode;
+        }
+        var gridUrl = Environment.GetEnvironmentVariable("GRID_URL");
+        if (!string.IsNullOrWhiteSpace(gridUrl))
+        {
+            settings.GridUrl = gridUrl;
+        }
+        var browser = Environment.GetEnvironmentVariable("BROWSER");
+        if (!string.IsNullOrWhiteSpace(browser))
+        {
+            settings.Browser = browser;
+        }
+        return settings;
     }
 }
