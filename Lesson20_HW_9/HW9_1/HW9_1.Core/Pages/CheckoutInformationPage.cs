@@ -1,17 +1,27 @@
-﻿using HW9_1.Core.Elements;
+﻿using HW9_1.Core.Configuration;
+using HW9_1.Core.Elements;
 using OpenQA.Selenium;
 
 namespace HW9_1.Core.Pages;
 
-public class CheckoutInformationPage(IWebDriver driver) : BasePage(driver)
+public class CheckoutInformationPage : BasePage
 {
+    private readonly Label _title;
+    private readonly TextBox _firstNameField;
+    private readonly TextBox _lastNameField;
+    private readonly TextBox _postalCodeField;
+    private readonly Button _continueButton;
+
     #region Elements
 
-    private readonly Label _title = new Label(driver, By.CssSelector("[data-test='title']"));
-    private readonly TextBox _firstNameField = new  TextBox(driver, By.Id("first-name"));
-    private readonly TextBox _lastNameField = new  TextBox(driver, By.Id("last-name"));
-    private readonly TextBox _postalCodeField = new TextBox(driver, By.Id("postal-code"));
-    private readonly Button _continueButton = new  Button(driver, By.Id("continue"));
+    public CheckoutInformationPage(IWebDriver driver, TestSettings settings) : base(driver, settings)
+    {
+        _title = ElementFactory.Create<Label>(By.CssSelector("[data-test='title']"));
+        _firstNameField = ElementFactory.Create<TextBox>(By.Id("first-name"));
+        _lastNameField = ElementFactory.Create<TextBox>(By.Id("last-name"));
+        _postalCodeField = ElementFactory.Create<TextBox>(By.Id("postal-code"));
+        _continueButton = ElementFactory.Create<Button>(By.Id("continue"));
+    }
 
     #endregion
 
@@ -35,15 +45,29 @@ public class CheckoutInformationPage(IWebDriver driver) : BasePage(driver)
         return this;
     }
 
-    public CheckoutOverviewPage FillForm(string firstName, string lastName, string postalCode)
+    public CheckoutOverviewPage ClickContinue()
     {
-        EnterFirstName(firstName);
-        EnterLastName(lastName);
-        EnterPostalCode(postalCode);
         _continueButton.Click();
-        return new CheckoutOverviewPage(Driver);
+        WaitUntilUrlContains("checkout-step-two");
+        return new CheckoutOverviewPage(Driver, Settings);
     }
-    public string GetTitle() => _title.GetText();
+
+    public string GetTitle()
+    {
+        return _title.GetText();
+    }
 
     #endregion
+
+    public override bool IsLoaded()
+    {
+        return _title.IsElementPresent() && _title.GetText() == "Checkout: Your Information";
+    }
+
+    public override CheckoutInformationPage Load()
+    {
+        return new CartPage(Driver, Settings)
+            .Load()
+            .OpenCheckout();
+    }
 }

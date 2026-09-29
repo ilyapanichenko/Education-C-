@@ -1,36 +1,71 @@
 ﻿using HW9_1.Core.Components;
+using HW9_1.Core.Configuration;
 using HW9_1.Core.Elements;
 using OpenQA.Selenium;
 
 namespace HW9_1.Core.Pages;
 
-public class CartPage(IWebDriver driver) : BasePage(driver)
+public class CartPage : BasePage
 {
-    public HeaderSection Header = new HeaderSection(driver);
+    public HeaderSection Header { get; }
+    private readonly Label _title;
+    private readonly Label _itemName;
+    private readonly Button _removeBackpack;
+    private readonly Button _checkoutButton;
 
     #region Elements
 
-    private readonly Label _title = new Label(driver, By.CssSelector("[data-test='title']"));
-    private readonly Label _itemName = new Label(driver,By.CssSelector("[data-test='inventory-item-name']"));
-    private readonly Button _removeBackpack = new Button(driver, By.Id("remove-sauce-labs-backpack"));
-    private readonly Button _checkoutButton = new Button(driver, By.Id("checkout"));
+    public CartPage(IWebDriver driver, TestSettings settings) : base(driver, settings)
+    {
+        Header = new HeaderSection(driver, settings);
+        _title = ElementFactory.Create<Label>(By.CssSelector("[data-test='title']"));
+        _itemName = ElementFactory.Create<Label>(By.CssSelector("[data-test='inventory-item-name']"));
+        _removeBackpack = ElementFactory.Create<Button>(By.Id("remove-sauce-labs-backpack"));
+        _checkoutButton = ElementFactory.Create<Button>(By.Id("checkout"));
+    }
 
     #endregion
 
     #region Methods
 
-    public string GetTitle() => _title.GetText();
+    public override bool IsLoaded()
+    {
+        return _title.IsElementPresent() && _title.GetText() == "Your Cart";
+    }
 
-    public string GetItemName() => _itemName.GetText();
+    public override CartPage Load()
+    {
+        return new ProductsPage(Driver, Settings)
+            .Load()
+            .Header
+            .OpenCart();
+    }
 
-    public bool IsCheckoutButtonPresent() => _checkoutButton.IsElementPresent();
+    public string GetTitle()
+    {
+        return _title.GetText();
+    }
 
-    public void RemoveBackpackFromCart() => _removeBackpack.Click();
+    public string GetItemName()
+    {
+        return _itemName.GetText();
+    }
+
+    public bool IsCheckoutButtonPresent()
+    {
+        return _checkoutButton.IsElementPresent();
+    }
+
+    public void RemoveBackpackFromCart()
+    {
+        _removeBackpack.Click();
+    }
 
     public CheckoutInformationPage OpenCheckout()
     {
         _checkoutButton.Click();
-        return new CheckoutInformationPage(Driver);
+        WaitUntilUrlContains("checkout-step-one");
+        return new CheckoutInformationPage(Driver, Settings);
     }
 
     #endregion

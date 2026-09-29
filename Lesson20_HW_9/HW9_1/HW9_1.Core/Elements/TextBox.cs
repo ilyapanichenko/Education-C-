@@ -7,6 +7,7 @@ public class TextBox : BaseElement
     public TextBox(IWebDriver driver, By locator) : base(driver, locator)
     {
     }
+
     public void SetText(string text)
     {
         var element = WaitUntilElementClickable();

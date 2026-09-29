@@ -1,4 +1,5 @@
 ﻿using HW9_1.Core.Pages;
+
 namespace HW9_1.Tests;
 
 public class CartPageTests : BaseTest
@@ -8,10 +9,11 @@ public class CartPageTests : BaseTest
     [SetUp]
     public void OpenCart()
     {
-        var loginPage = new LoginPage(Driver);
-        loginPage.Open();
-
-        var productsPage = loginPage.Login();
+        var productsPage = new LoginPage(Driver, Settings)
+            .Load()
+            .EnterUsername()
+            .EnterPassword()
+            .Login();
 
         productsPage.AddBackpackToCart();
 

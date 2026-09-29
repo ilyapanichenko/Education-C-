@@ -1,4 +1,5 @@
 ﻿using HW9_1.Core.Pages;
+using HW9_1.Tests.TestData;
 
 namespace HW9_1.Tests;
 
@@ -7,10 +8,13 @@ public class PurchaseTest : BaseTest
     [Test]
     public void PurchaseItemTest()
     {
-        var loginPage = new LoginPage(Driver);
-        loginPage.Open();
+        var loginPage = new LoginPage(Driver, Settings)
+            .Load();
 
-        var productsPage = loginPage.Login();
+        var productsPage = loginPage
+            .EnterUsername()
+            .EnterPassword()
+            .Login();
         Assert.That(productsPage.GetTitle(), Is.EqualTo("Products"));
 
         productsPage.AddBackpackToCart();
@@ -22,8 +26,12 @@ public class PurchaseTest : BaseTest
 
         var checkoutInformationPage = cartPage.OpenCheckout();
         Assert.That(checkoutInformationPage.GetTitle(), Is.EqualTo("Checkout: Your Information"));
-
-        var checkoutOverviewPage = checkoutInformationPage.FillForm("Ilia", "Panichenko", "123456");
+        var checkoutData = new CheckoutDataBuilder().Build();
+        var checkoutOverviewPage = checkoutInformationPage
+            .EnterFirstName(checkoutData.FirstName)
+            .EnterLastName(checkoutData.LastName)
+            .EnterPostalCode(checkoutData.PostalCode)
+            .ClickContinue();
         Assert.That(checkoutOverviewPage.GetTitle(), Is.EqualTo("Checkout: Overview"));
         Assert.That(checkoutOverviewPage.GetItemName(), Is.EqualTo("Sauce Labs Backpack"));
         Assert.That(checkoutOverviewPage.GetItemQuantity(), Is.EqualTo("1"));
@@ -40,7 +48,8 @@ public class PurchaseTest : BaseTest
         var checkoutCompletePage = checkoutOverviewPage.CompleteOrder();
         Assert.That(checkoutCompletePage.GetTitle(), Is.EqualTo("Checkout: Complete!"));
         Assert.That(checkoutCompletePage.GetCompleteHeader(), Is.EqualTo("Thank you for your order!"));
-        Assert.That(checkoutCompletePage.GetCompleteText(), Is.EqualTo("Your order has been dispatched, and will arrive just as fast as the pony can get there!"));
+        Assert.That(checkoutCompletePage.GetCompleteText(),
+            Is.EqualTo("Your order has been dispatched, and will arrive just as fast as the pony can get there!"));
         Assert.That(checkoutCompletePage.IsBackHomeButtonPresent(), Is.True);
 
         productsPage = checkoutCompletePage.BackHome();

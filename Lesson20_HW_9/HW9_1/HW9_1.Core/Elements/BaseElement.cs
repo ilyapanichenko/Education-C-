@@ -8,15 +8,18 @@ public abstract class BaseElement
     protected readonly IWebDriver Driver;
     protected readonly By Locator;
     private static readonly TimeSpan DefaultTimeout = TimeSpan.FromSeconds(10);
+
     protected BaseElement(IWebDriver driver, By locator)
     {
         Driver = driver;
         Locator = locator;
     }
+
     public bool IsElementPresent()
     {
         return Driver.FindElements(Locator).Count > 0;
     }
+
     protected IWebElement WaitUntilElementVisible()
     {
         return CreateWait().Until(driver =>
@@ -39,9 +42,10 @@ public abstract class BaseElement
     {
         CreateWait().Until(driver => driver.FindElements(Locator).Count == 0);
     }
+
     private WebDriverWait CreateWait()
     {
-        WebDriverWait wait = new WebDriverWait(Driver, DefaultTimeout);
+        var wait = new WebDriverWait(Driver, DefaultTimeout);
         wait.IgnoreExceptionTypes(typeof(StaleElementReferenceException));
         return wait;
     }

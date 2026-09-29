@@ -1,4 +1,5 @@
 ﻿using HW9_1.Core.Pages;
+
 namespace HW9_1.Tests;
 
 public class ProductsPageTests : BaseTest
@@ -8,10 +9,11 @@ public class ProductsPageTests : BaseTest
     [SetUp]
     public void Login()
     {
-        var loginPage = new LoginPage(Driver);
-        loginPage.Open();
-
-        _productsPage = loginPage.Login();
+        _productsPage = new LoginPage(Driver, Settings)
+            .Load()
+            .EnterUsername()
+            .EnterPassword()
+            .Login();
     }
 
     [Test]
