@@ -58,6 +58,16 @@ pipeline {
                     }
                 }
             }
+
+            post {
+                always {
+                    dir(params.PROJECT_DIR) {
+                        allure includeProperties: false,
+                               jdk: '',
+                               results: [[path: 'HW9_1.Tests/allure-results']]
+                    }
+                }
+            }
         }
     }
 }
