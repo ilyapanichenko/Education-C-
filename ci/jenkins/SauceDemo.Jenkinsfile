@@ -21,8 +21,8 @@ pipeline {
         )
 
         choice(
-            name: 'BROWSER',
-            choices: ['Chrome', 'Firefox', 'Edge'],
+            name: 'TARGET_BROWSER',
+            choices: ['All', 'Chrome', 'Firefox', 'Edge'],
             description: 'Браузер для запуска тестов'
         )
     }
@@ -50,22 +50,48 @@ pipeline {
             }
         }
 
-        stage('Test') {
+        stage('Clean Allure Results') {
             steps {
                 dir(params.PROJECT_DIR) {
-                    withEnv(["BROWSER=${params.BROWSER}"]) {
-                        sh "dotnet test ${params.TEST_PROJECT} --no-build"
+                    sh 'rm -rf HW9_1.Tests/allure-results'
+                }
+            }
+        }
+
+        stage('Tests') {
+            matrix {
+                axes {
+                    axis {
+                        name 'BROWSER'
+                        values 'Chrome', 'Firefox', 'Edge'
+                    }
+                }
+
+                stages {
+                    stage('Run Tests') {
+                        when {
+                            expression {
+                                params.TARGET_BROWSER == 'All' ||
+                                params.TARGET_BROWSER == env.BROWSER
+                            }
+                        }
+
+                        steps {
+                            dir(params.PROJECT_DIR) {
+                                sh "dotnet test ${params.TEST_PROJECT} --no-build"
+                            }
+                        }
                     }
                 }
             }
+        }
 
-            post {
-                always {
-                    dir(params.PROJECT_DIR) {
-                        allure includeProperties: false,
-                               jdk: '',
-                               results: [[path: 'HW9_1.Tests/allure-results']]
-                    }
+        stage('Allure Report') {
+            steps {
+                dir(params.PROJECT_DIR) {
+                    allure commandline: 'allure Jenkins',
+                           includeProperties: false,
+                           results: [[path: 'HW9_1.Tests/allure-results']]
                 }
             }
         }
