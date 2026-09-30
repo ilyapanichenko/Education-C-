@@ -153,3 +153,5 @@ pnpm-debug.log*
 publish/
 artifacts/
 artifacts-test/
+**/allure-results/
+**/allure-report/
