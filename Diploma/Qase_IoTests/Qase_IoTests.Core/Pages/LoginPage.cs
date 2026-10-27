@@ -13,6 +13,7 @@ public class LoginPage : BasePage
     private readonly By _cookiesHost = By.Id("usercentrics-cmp-ui");
     private readonly By _loginError = By.XPath("//span[normalize-space()='These credentials do not match our records.']");
     private readonly By _loginAlerts = By.CssSelector("[role='alert'].alert-danger");
+    private readonly By _rateLimitError = By.XPath("//span[contains(normalize-space(.), 'You have exceeded the maximum number of allowed requests')]");
 
     public LoginPage(IWebDriver driver) : base(driver)
     {
@@ -84,6 +85,8 @@ public class LoginPage : BasePage
     {
         try
         {
+            var rateLimitError = Driver.FindElements(_rateLimitError).FirstOrDefault(element => element.Displayed);
+            if (rateLimitError != null) return rateLimitError.Text.Trim();
             return Driver.FindElements(_loginAlerts)
                 .Where(element => element.Displayed)
                 .Select(element => element.Text.Trim())
