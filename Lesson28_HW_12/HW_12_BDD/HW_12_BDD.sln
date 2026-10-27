@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookingBDD.Core", "BookingBDD.Core\BookingBDD.Core.csproj", "{BFB5A86F-D765-4651-B816-5E5036FBE3EE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookingBDD.Tests", "BookingBDD.Tests\BookingBDD.Tests.csproj", "{59F86EAE-F52F-4FA0-9320-53D7695C4A6A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BFB5A86F-D765-4651-B816-5E5036FBE3EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BFB5A86F-D765-4651-B816-5E5036FBE3EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BFB5A86F-D765-4651-B816-5E5036FBE3EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BFB5A86F-D765-4651-B816-5E5036FBE3EE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{59F86EAE-F52F-4FA0-9320-53D7695C4A6A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{59F86EAE-F52F-4FA0-9320-53D7695C4A6A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{59F86EAE-F52F-4FA0-9320-53D7695C4A6A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{59F86EAE-F52F-4FA0-9320-53D7695C4A6A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
