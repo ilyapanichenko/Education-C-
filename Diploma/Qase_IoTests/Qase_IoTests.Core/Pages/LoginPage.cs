@@ -12,6 +12,8 @@ public class LoginPage : BasePage
     private readonly By _acceptCookiesButton = By.CssSelector("button[data-action='consent'][data-action-type='accept']");
     private readonly By _cookiesHost = By.Id("usercentrics-cmp-ui");
     private readonly By _loginError = By.XPath("//span[normalize-space()='These credentials do not match our records.']");
+    private readonly By _loginAlerts = By.CssSelector("[role='alert'].alert-danger");
+
     public LoginPage(IWebDriver driver) : base(driver)
     {
     }
@@ -43,12 +45,12 @@ public class LoginPage : BasePage
         field.Clear();
         field.SendKeys(password);
     }
-    
+
     public void ClickLogin()
     {
         WaitForVisible(_loginButton).Click();
     }
-    
+
     public bool AcceptCookiesIfPresent()
     {
         var wait = new WebDriverWait(Driver, TestSettings.WindowsTimeout);
@@ -72,9 +74,24 @@ public class LoginPage : BasePage
             return false;
         }
     }
-    
+
     public string GetLoginErrorMessage()
     {
         return WaitForVisible(_loginError).Text;
+    }
+
+    public string? GetVisibleLoginError()
+    {
+        try
+        {
+            return Driver.FindElements(_loginAlerts)
+                .Where(element => element.Displayed)
+                .Select(element => element.Text.Trim())
+                .FirstOrDefault(text => !string.IsNullOrWhiteSpace(text));
+        }
+        catch (StaleElementReferenceException)
+        {
+            return null;
+        }
     }
 }
