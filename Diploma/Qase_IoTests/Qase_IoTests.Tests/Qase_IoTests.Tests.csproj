@@ -40,8 +40,4 @@
       </None>
     </ItemGroup>
 
-    <ItemGroup>
-      <Content Remove="..\..\..\..\..\.nuget\packages\allure.reqnroll\3.0.0-preview.1\contentFiles\any\netstandard2.0\allureConfig.Template.json" />
-    </ItemGroup>
-
 </Project>
