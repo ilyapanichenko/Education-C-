@@ -1,4 +1,3 @@
-
 name: Qase Automated Tests
 
 on:
@@ -10,7 +9,6 @@ on:
   workflow_dispatch:
 
 jobs:
-
   api-tests:
     name: API Tests
     runs-on: windows-latest
