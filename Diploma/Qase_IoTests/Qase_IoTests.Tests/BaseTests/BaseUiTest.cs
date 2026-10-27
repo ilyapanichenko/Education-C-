@@ -3,6 +3,7 @@ using Allure.Net.Commons;
 using Allure.NUnit;
 using NUnit.Framework.Interfaces;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
 using Qase_IoTests.Core.Api;
 using Qase_IoTests.Core.Configuration;
 using Qase_IoTests.Core.Logging;
@@ -39,9 +40,36 @@ public abstract class BaseUiTest
         loginPage.EnterPassword(TestConfig.UiPassword);
         loginPage.ClickLogin();
 
+        var wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(15));
+
+        try
+        {
+            wait.Until(driver =>
+            {
+                if (new Uri(driver.Url).AbsolutePath == "/projects")
+                    return true;
+
+                var error = loginPage.GetVisibleLoginError();
+
+                if (!string.IsNullOrWhiteSpace(error))
+                {
+                    throw new InvalidOperationException(
+                        $"Qase login failed: {error}. URL: {driver.Url}");
+                }
+
+                return false;
+            });
+        }
+        catch (WebDriverTimeoutException)
+        {
+            throw new WebDriverTimeoutException(
+                $"Qase login timeout. Current URL: {Driver.Url}. " +
+                $"Login error: {loginPage.GetVisibleLoginError() ?? "Not detected"}");
+        }
+
         return new ProjectsPage(Driver);
     }
-    
+
     protected async Task DeleteCaseViaApiAsync(int caseId)
     {
         using var client = new ApiClient(TestConfig.BaseUrl, TestConfig.ApiKey);
@@ -66,7 +94,7 @@ public abstract class BaseUiTest
         Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
         return response.Data?.Result?.Entities?.FirstOrDefault(s => s.Title == title)?.Id;
     }
-    
+
     protected async Task DeleteSuiteViaApiAsync(int suiteId)
     {
         using var client = new ApiClient(TestConfig.BaseUrl, TestConfig.ApiKey);
