@@ -1,0 +1,118 @@
+
+name: Qase Automated Tests
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'Diploma/Qase_IoTests/**'
+      - '.github/workflows/qase-tests.yml'
+  workflow_dispatch:
+
+jobs:
+
+  api-tests:
+    name: API Tests
+    runs-on: windows-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup .NET 10
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Restore dependencies
+        run: dotnet restore Diploma/Qase_IoTests/Qase_IoTests.sln
+
+      - name: Run API tests
+        env:
+          QASE_API_KEY: ${{ secrets.QASE_API_KEY }}
+        run: >
+          dotnet test Diploma/Qase_IoTests/Qase_IoTests.sln
+          --configuration Release
+          --no-restore
+          --filter "FullyQualifiedName~ApiTests"
+          --logger "trx;LogFileName=api-tests.trx"
+          --results-directory Diploma/Qase_IoTests/Qase_IoTests.Tests/TestResults
+
+      - name: Upload API results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: api-test-results
+          path: |
+            Diploma/Qase_IoTests/Qase_IoTests.Tests/TestResults/
+            Diploma/Qase_IoTests/Qase_IoTests.Tests/artifacts/
+            Diploma/Qase_IoTests/**/allure-results/
+          if-no-files-found: warn
+
+  ui-tests:
+    name: UI Tests - ${{ matrix.browser }}
+    runs-on: windows-latest
+    timeout-minutes: 30
+
+    strategy:
+      fail-fast: false
+      matrix:
+        browser:
+          - chrome
+          - firefox
+          - edge
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup .NET 10
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Restore dependencies
+        run: dotnet restore Diploma/Qase_IoTests/Qase_IoTests.sln
+
+      - name: Configure browser and headless mode
+        shell: pwsh
+        env:
+          BROWSER_NAME: ${{ matrix.browser }}
+        run: |
+          $path = "Diploma/Qase_IoTests/Qase_IoTests.Tests/appsettings.json"
+
+          $settings = Get-Content $path -Raw | ConvertFrom-Json
+
+          $settings.Browser = $env:BROWSER_NAME
+          $settings.Headless = $true
+
+          $settings |
+            ConvertTo-Json -Depth 10 |
+            Set-Content $path -Encoding utf8
+
+          Get-Content $path
+
+      - name: Run UI and BDD tests
+        env:
+          QASE_API_KEY: ${{ secrets.QASE_API_KEY }}
+          QASE_UI_EMAIL: ${{ secrets.QASE_UI_EMAIL }}
+          QASE_UI_PASSWORD: ${{ secrets.QASE_UI_PASSWORD }}
+        run: >
+          dotnet test Diploma/Qase_IoTests/Qase_IoTests.sln
+          --configuration Release
+          --no-restore
+          --filter "FullyQualifiedName~UiTests|FullyQualifiedName~BDD"
+          --logger "trx;LogFileName=ui-tests.trx"
+          --results-directory Diploma/Qase_IoTests/Qase_IoTests.Tests/TestResults
+
+      - name: Upload UI results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ui-results-${{ matrix.browser }}
+          path: |
+            Diploma/Qase_IoTests/Qase_IoTests.Tests/TestResults/
+            Diploma/Qase_IoTests/Qase_IoTests.Tests/artifacts/
+            Diploma/Qase_IoTests/**/allure-results/
+          if-no-files-found: warn
