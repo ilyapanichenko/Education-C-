@@ -1,0 +1,104 @@
+name: Publish Allure Report
+
+on:
+  workflow_run:
+    workflows:
+      - Qase Automated Tests
+    types:
+      - completed
+
+  workflow_dispatch:
+    inputs:
+      run_id:
+        description: "Run ID of Qase Automated Tests (e.g. 40500902211)"
+        required: true
+        type: string
+
+permissions:
+  actions: read
+  contents: read
+
+concurrency:
+  group: allure-pages
+  cancel-in-progress: false
+
+env:
+  SOURCE_RUN_ID: ${{ github.event.workflow_run.id || inputs.run_id }}
+
+jobs:
+  allure-report:
+    name: Generate Allure HTML
+    if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.head_branch == 'main' }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Download original test results
+        uses: actions/download-artifact@v4
+        with:
+          run-id: ${{ env.SOURCE_RUN_ID }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          pattern: '*results*'
+          path: downloaded-results
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Allure Commandline
+        run: |
+          npm install --global allure-commandline@2.36.0
+          allure --version
+
+      - name: Generate reports and index
+        shell: bash
+        run: bash .github/scripts/generate-allure.sh
+
+      - name: Upload HTML report artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-html-report-${{ env.SOURCE_RUN_ID }}
+          path: allure-site/
+          retention-days: 30
+          if-no-files-found: error
+
+  publish-pages:
+    name: Publish Allure to GitHub Pages
+    needs: allure-report
+    runs-on: ubuntu-latest
+    permissions:
+      actions: read
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Download generated HTML report
+        uses: actions/download-artifact@v4
+        with:
+          name: allure-html-report-${{ env.SOURCE_RUN_ID }}
+          path: allure-site
+
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload GitHub Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: allure-site
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

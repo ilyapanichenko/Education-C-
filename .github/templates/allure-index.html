@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Qase Automated Tests | Allure Reports</title>
+  <style>
+    :root { color-scheme: light; }
+    body { font-family: system-ui, -apple-system, Segoe UI, sans-serif; max-width: 850px; margin: 4rem auto; padding: 0 1.5rem; color: #20242a; }
+    h1 { margin-bottom: .25rem; }
+    p { color: #596273; }
+    .reports { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 1rem; margin-top: 2rem; }
+    .reports a { display: block; padding: 1.25rem; border: 1px solid #d8dde5; border-radius: 12px; text-decoration: none; color: inherit; font-weight: 600; }
+    .reports a:hover { background: #f4f6fa; border-color: #8896aa; }
+    footer { margin-top: 2rem; font-size: .9rem; }
+  </style>
+</head>
+<body>
+  <h1>Qase Automated Tests</h1>
+  <p>Allure reports for GitHub Actions run #__SOURCE_RUN_ID__</p>
+  <div class="reports">
+    <a href="api/">API tests</a>
+    <a href="ui/chrome/">UI · Chrome</a>
+    <a href="ui/firefox/">UI · Firefox</a>
+    <a href="ui/edge/">UI · Edge</a>
+  </div>
+  <footer><a href="https://github.com/__REPOSITORY__/actions/runs/__SOURCE_RUN_ID__">View original workflow run</a></footer>
+</body>
+</html>
